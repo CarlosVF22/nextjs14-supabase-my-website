@@ -2,41 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 200 20% 98%;
-    --btn-background: 200 10% 91%;
-    --btn-background-hover: 200 10% 89%;
-    --foreground: 200 50% 3%;
-  }
+body {
+    background-color: #f8f3f3;
+}
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: 200 50% 3%;
-      --btn-background: 200 10% 9%;
-      --btn-background-hover: 200 10% 12%;
-      --foreground: 200 20% 96%;
+.background {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Estilos base para las esferas */
+.esfera {
+    width: 800px;
+    height: 800px;
+    position: absolute;
+    border-radius: 50%;
+
+    /* Degradado radial */
+    background: radial-gradient(circle, #71bcf954, #d0b3f872, #ffd4bac7);
+
+    /* Agregar desenfoque */
+    filter: blur(45px);
+    transition: transform 6s ease;
+    z-index: -1;
+}
+
+@media (min-width: 1320px) and (max-width: 1720px) {
+    .esfera {
+        width: 1100px;
+        height: 1100px;
     }
-  }
 }
 
-@layer base {
-  * {
-    @apply border-foreground/20;
-  }
+@media (min-width: 1720px) {
+    .esfera {
+        width: 1500px;
+        height: 1500px;
+    }
 }
-
-.animate-in {
-  animation: animateIn 0.3s ease 0.15s both;
-}
-
-@keyframes animateIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* #c2dff7 */
+/* #d0b3f8 */
+/* #ffd4ba */
+/* #333333 */
+/* #666666 */
