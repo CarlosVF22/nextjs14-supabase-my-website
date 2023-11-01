@@ -9,6 +9,7 @@
     "@react-spring/web": "^9.7.3",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@vercel/analytics": "^1.1.1",
     "autoprefixer": "10.4.15",
     "next": "latest",
     "postcss": "8.4.29",
