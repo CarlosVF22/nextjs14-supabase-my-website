@@ -55,7 +55,7 @@ export default function Page() {
             <div className="esfera esfera1" ref={esfera1Ref}></div>
             <div className="esfera esfera2" ref={esfera2Ref}></div>
             <main className="h-full">
-                <header className="flex justify-end mt-5">
+                <header className="flex mt-5 justify-center md:mr-16 md:justify-end">
                     <a
                         href="https://www.upwork.com/freelancers/~0123e43d1cc5ba4043"
                         target="_blank"
