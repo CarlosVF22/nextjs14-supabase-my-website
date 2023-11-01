@@ -30,6 +30,17 @@ body {
     z-index: -1;
 }
 
+.nav-bar {
+    background-color: #f8f3f394;
+    z-index: 1;
+    bottom: 20px;
+    position: fixed;
+    left: 50%; /* posiciona el inicio del elemento al 50% del ancho del contenedor */
+    transform: translateX(
+        -50%
+    ); /* mueve el elemento hacia la izquierda la mitad de su propio ancho */
+}
+
 @media (min-width: 1320px) and (max-width: 1720px) {
     .esfera {
         width: 1100px;
