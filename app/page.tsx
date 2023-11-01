@@ -1,7 +1,7 @@
 "use client";
 
 // import { createClient } from "@/utils/supabase/client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PrimaryButton from "@/components/PrimaryButton";
 import RotateText from "@/components/RotateText";
 import Image from "next/image";
@@ -9,11 +9,15 @@ import UpworkIcon from "./icons/upwork-icon-512.png";
 import LinkedinIcon from "./icons/linkedin-icon-512.png";
 import InstagramIcon from "./icons/instagram-icon-512.png";
 import NavBar from "@/components/NavBar";
+import DownloadCVButton from "@/components/DownloadCVButton";
+import FormContact from "@/components/FormContact";
+import Modal from "@/components/Modal";
 
 export default function Page() {
     // const supabase = createClient();
     const esfera1Ref = useRef(null);
     const esfera2Ref = useRef(null);
+    const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         function moveRandomly(element: any) {
@@ -37,6 +41,14 @@ export default function Page() {
             moveRandomly(esfera2Ref.current);
         }
     }, []);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
 
     return (
         <div className="background">
@@ -95,9 +107,19 @@ export default function Page() {
                             </h1>
                         </div>
                         <div className="mt-2 flex justify-center w-full">
-                            <PrimaryButton />
+                            <div className="p-2">
+                                <PrimaryButton onClick={handleOpenModal} />
+                            </div>
+                            <div className="p-2">
+                                <DownloadCVButton />
+                            </div>
                         </div>
                     </div>
+                    {isModalOpen && (
+                        <Modal onClose={handleCloseModal}>
+                            <FormContact />
+                        </Modal>
+                    )}
                 </section>
             </main>
             <NavBar />

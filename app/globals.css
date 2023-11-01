@@ -2,15 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --main-bg-color: #f8f3f3;
+    --radial-gradient-1: #71bcf954;
+    --radial-gradient-2: #d0b3f872;
+    --radial-gradient-3: #ffd4bac7;
+    --primary-color: #f59e0b;
+    --primary-color-hover: #fbd34c;
+    --nav-bg-color: #f8f3f394;
+}
+
 body {
-    background-color: #f8f3f3;
+    background-color: var(--main-bg-color);
+}
+
+.primary-color {
+    background-color: var(--primary-color);
+}
+
+.primary-color:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.primary-border-color-text {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.primary-border-color-text:hover {
+    border-color: var(--primary-color-hover);
+    color: var(--primary-color-hover);
 }
 
 .background {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden;
+    min-height: 100vh; /* Usa min-height en lugar de height para permitir que el contenido haga que la página crezca verticalmente */
+    overflow-x: hidden; /* Esto evitará el desbordamiento horizontal */
     position: relative;
 }
 
@@ -22,7 +51,12 @@ body {
     border-radius: 50%;
 
     /* Degradado radial */
-    background: radial-gradient(circle, #71bcf954, #d0b3f872, #ffd4bac7);
+    background: radial-gradient(
+        circle,
+        var(--radial-gradient-1),
+        var(--radial-gradient-2),
+        var(--radial-gradient-3)
+    );
 
     /* Agregar desenfoque */
     filter: blur(45px);
@@ -31,7 +65,7 @@ body {
 }
 
 .nav-bar {
-    background-color: #f8f3f394;
+    background-color: var(--nav-bg-color);
     z-index: 1;
     bottom: 20px;
     position: fixed;
