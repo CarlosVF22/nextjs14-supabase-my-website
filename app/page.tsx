@@ -12,7 +12,7 @@ import NavBar from "@/components/NavBar";
 import DownloadCVButton from "@/components/DownloadCVButton";
 import FormContact from "@/components/FormContact";
 import Modal from "@/components/Modal";
-
+import Project from "@/components/Project";
 export default function Page() {
     // const supabase = createClient();
     const esfera1Ref = useRef(null);
@@ -123,6 +123,7 @@ export default function Page() {
                 </section>
             </main>
             <NavBar />
+            <Project />
         </div>
     );
 }

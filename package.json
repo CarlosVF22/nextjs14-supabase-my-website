@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/client": "^5.5.2",
     "@react-spring/web": "^9.7.3",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",

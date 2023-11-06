@@ -9,9 +9,9 @@ export default function FormContact() {
     };
 
     return (
-        <div className="w-11/12 md:w-10/12 m-auto py-8">
+        <div className="md:w-96 m-auto py-8 ">
             <form
-                className="flex flex-col gap-4 items-center"
+                className="flex flex-col gap-4 items-center rounded-3xl"
                 onSubmit={handleSubmit}
             >
                 <input
@@ -31,7 +31,7 @@ export default function FormContact() {
                 ></textarea>
                 <button
                     type="submit"
-                    className="primary-color transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300 rounded-full bg-salte-700 text-white px-6 py-2 md:px-8 md:py-3 lg:px-10 lg:py-4 text-sm md:text-lg lg:text-xl"
+                    className="transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300 rounded-full w-36 h-8 md:w-48 md:h-10 lg:w-56 lg:h-12 primary-color text-lg md:text-xl lg:text-2xl font-medium"
                 >
                     Send Message
                 </button>

@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          Int       @id @default(autoincrement()) @unique
+  name        String
+  start_date  DateTime
+  description String
+  image       String?
+  technologies TechnologyOnProject[]
+}
+
+model Job {
+  id          Int       @id @default(autoincrement()) @unique
+  name        String
+  start_date  DateTime
+  description String
+  image       String?
+  technologies TechnologyOnJob[]
+}
+
+model Technology {
+  id         Int                  @id @default(autoincrement()) @unique
+  name       String
+  image      String?
+  projects   TechnologyOnProject[]
+  jobs       TechnologyOnJob[]
+}
+
+model TechnologyOnProject {
+  id             Int       @id @default(autoincrement()) @unique
+  project        Project   @relation(fields: [projectId], references: [id])
+  projectId      Int
+  technology     Technology @relation(fields: [technologyId], references: [id])
+  technologyId   Int
+  @@unique([projectId, technologyId])
+}
+
+model TechnologyOnJob {
+  id             Int       @id @default(autoincrement()) @unique
+  job            Job       @relation(fields: [jobId], references: [id])
+  jobId          Int
+  technology     Technology @relation(fields: [technologyId], references: [id])
+  technologyId   Int
+  @@unique([jobId, technologyId])
+}
+
+model ContactFormSubmission {
+  id                Int     @id @default(autoincrement()) @unique
+  name              String
+  email             DateTime
+  message_sent      String
+  scheduled_meeting Boolean
+}
