@@ -3,7 +3,7 @@
 import React from "react";
 
 export default function DownloadCVButton() {
-    const pdfPath = "/public/pdf/CV_developer_carlosVasquez_english.pdf"; // Cambia esto por la ruta real de tu archivo PDF dentro del proyecto
+    const pdfPath = "/pdf/CV_developer_carlosVasquez_english.pdf"; // Cambia esto por la ruta real de tu archivo PDF dentro del proyecto
 
     return (
         <a
