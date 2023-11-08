@@ -13,12 +13,35 @@ import DownloadCVButton from "@/components/DownloadCVButton";
 import FormContact from "@/components/FormContact";
 import Modal from "@/components/Modal";
 import Project from "@/components/Project";
+
+interface Technology {
+    id: number;
+    name: string;
+    image_url: string | null;
+    created_at: string;
+}
+
+interface ProjectTechnology {
+    Technologies: Technology;
+}
+
+interface ProjectType {
+    id: number;
+    name: string;
+    start_date: Date;
+    description: string;
+    image_url: string | null;
+    project_url: string;
+    Projects_Technologies: ProjectTechnology[];
+}
+
 export default function Page() {
-    // const supabase = createClient();
     const esfera1Ref = useRef(null);
     const esfera2Ref = useRef(null);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [projects, setProjects] = useState<ProjectType[]>([]);
 
+    // create move in background
     useEffect(() => {
         function moveRandomly(element: any) {
             const minX = -320;
@@ -42,6 +65,16 @@ export default function Page() {
         }
     }, []);
 
+    // fetch all projects
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const response = await fetch("/projects");
+            const data = await response.json();
+            setProjects(data.projects);
+        };
+        fetchProjects();
+    }, []);
+
     const handleOpenModal = () => {
         setModalOpen(true);
     };
@@ -54,7 +87,7 @@ export default function Page() {
         <div className="background">
             <div className="esfera esfera1" ref={esfera1Ref}></div>
             <div className="esfera esfera2" ref={esfera2Ref}></div>
-            <main className="h-full">
+            <main className="h-full relative">
                 <header className="flex mt-5 justify-center md:mr-16 md:justify-end">
                     <a
                         href="https://www.upwork.com/freelancers/~0123e43d1cc5ba4043"
@@ -121,18 +154,41 @@ export default function Page() {
                         </Modal>
                     )}
                 </section>
+                <section
+                    id="projects"
+                    className="relative flex justify-center flex-col items-center"
+                >
+                    <h2 className="mb-5 text-salte-700 text-3xl font-extrabold md:text-6xl lg:text-8xl">
+                        Projects
+                    </h2>
+                    <div className="flex flex-wrap justify-center">
+                        {projects.map((project) => {
+                            return (
+                                <Project
+                                    key={project.id}
+                                    name={project.name}
+                                    startDate={project.start_date}
+                                    description={project.description}
+                                    image_url={project.image_url}
+                                    project_url={project.project_url}
+                                    Projects_Technologies={
+                                        project.Projects_Technologies
+                                    }
+                                />
+                            );
+                        })}
+                    </div>
+                </section>
+                <section
+                    id="jobs"
+                    className="relative flex justify-center flex-col items-center"
+                >
+                    <h2 className="mb-5 text-salte-700 text-3xl font-extrabold md:text-6xl lg:text-8xl">
+                        Jobs
+                    </h2>
+                </section>
             </main>
             <NavBar />
-            <Project />
         </div>
     );
 }
-// const [notes, setNotes] = useState<any[] | null>(null);
-
-// useEffect(() => {
-//     const getData = async () => {
-//         const { data } = await supabase.from("notes").select();
-//         setNotes(data);
-//     };
-//     getData();
-// }, []);

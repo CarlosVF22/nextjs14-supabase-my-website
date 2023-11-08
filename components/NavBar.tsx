@@ -12,11 +12,17 @@ import DownloadIcon from "../app/icons/download-icon-512.png";
 export default function NavBar() {
     // Estado para los tooltips de cada elemento con su imagen, mensaje y visibilidad
     const [tooltips, setTooltips] = useState([
-        { isVisible: false, message: "My Projects", icon: ProjectIcon },
+        {
+            isVisible: false,
+            message: "My Projects",
+            icon: ProjectIcon,
+            id: "projects",
+        },
         {
             isVisible: false,
             message: "Jobs experience",
             icon: JobsExperienceIcon,
+            id: "jobs",
         },
         { isVisible: false, message: "About me", icon: AboutMeIcon },
         { isVisible: false, message: "Download CV", icon: DownloadIcon },
@@ -55,9 +61,9 @@ export default function NavBar() {
                         <Image src={tooltip.icon} alt={tooltip.message} />
                     </a>
                 ) : (
-                    <div className="cursor-pointer">
+                    <a href={`#${tooltip.id}`} className="block w-full h-full">
                         <Image src={tooltip.icon} alt={tooltip.message} />
-                    </div>
+                    </a>
                 );
 
                 return (
