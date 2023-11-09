@@ -12,7 +12,8 @@ import NavBar from "@/components/NavBar";
 import DownloadCVButton from "@/components/DownloadCVButton";
 import FormContact from "@/components/FormContact";
 import Modal from "@/components/Modal";
-import Project from "@/components/Project";
+import ProjectCard from "@/components/ProjectCard";
+import JobCard from "@/components/JobCard";
 
 interface Technology {
     id: number;
@@ -22,6 +23,10 @@ interface Technology {
 }
 
 interface ProjectTechnology {
+    Technologies: Technology;
+}
+
+interface JobTechnology {
     Technologies: Technology;
 }
 
@@ -35,11 +40,24 @@ interface ProjectType {
     Projects_Technologies: ProjectTechnology[];
 }
 
+interface JobType {
+    id: number;
+    name: string;
+    company_name: string;
+    start_date: Date;
+    finish_date: Date;
+    description: string;
+    image_url: string | null;
+    job_url: string;
+    Jobs_Technologies: JobTechnology[];
+}
+
 export default function Page() {
     const esfera1Ref = useRef(null);
     const esfera2Ref = useRef(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [projects, setProjects] = useState<ProjectType[]>([]);
+    const [jobs, setJobs] = useState<JobType[]>([]);
 
     // create move in background
     useEffect(() => {
@@ -73,6 +91,16 @@ export default function Page() {
             setProjects(data.projects);
         };
         fetchProjects();
+    }, []);
+
+    // fetch all jobs
+    useEffect(() => {
+        const fetchJobs = async () => {
+            const response = await fetch("/jobs");
+            const data = await response.json();
+            setJobs(data.jobs);
+        };
+        fetchJobs();
     }, []);
 
     const handleOpenModal = () => {
@@ -155,16 +183,41 @@ export default function Page() {
                     )}
                 </section>
                 <section
-                    id="projects"
+                    id="jobs"
                     className="relative flex justify-center flex-col items-center"
                 >
-                    <h2 className="mb-5 text-salte-700 text-3xl font-extrabold md:text-6xl lg:text-8xl">
+                    <h2 className="mb-5 text-salte-700 text-6xl font-extrabold md:text-6xl lg:text-8xl">
+                        Jobs
+                    </h2>
+                    <div className="flex flex-wrap justify-center">
+                        {jobs.map((job) => {
+                            return (
+                                <JobCard
+                                    key={job.id}
+                                    name={job.name}
+                                    company_name={job.company_name}
+                                    startDate={job.start_date}
+                                    finishDate={job.finish_date}
+                                    description={job.description}
+                                    image_url={job.image_url}
+                                    job_url={job.job_url}
+                                    Jobs_Technologies={job.Jobs_Technologies}
+                                />
+                            );
+                        })}
+                    </div>
+                </section>
+                <section
+                    id="projects"
+                    className="relative flex justify-center flex-col items-center mt-24"
+                >
+                    <h2 className="mb-5 text-salte-700 text-6xl font-extrabold md:text-6xl lg:text-8xl">
                         Projects
                     </h2>
                     <div className="flex flex-wrap justify-center">
                         {projects.map((project) => {
                             return (
-                                <Project
+                                <ProjectCard
                                     key={project.id}
                                     name={project.name}
                                     startDate={project.start_date}
@@ -178,14 +231,6 @@ export default function Page() {
                             );
                         })}
                     </div>
-                </section>
-                <section
-                    id="jobs"
-                    className="relative flex justify-center flex-col items-center"
-                >
-                    <h2 className="mb-5 text-salte-700 text-3xl font-extrabold md:text-6xl lg:text-8xl">
-                        Jobs
-                    </h2>
                 </section>
             </main>
             <NavBar />

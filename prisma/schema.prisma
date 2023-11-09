@@ -35,5 +35,30 @@ model Technologies {
   name                  String
   image_url             String?
   created_at            DateTime                @default(now()) @db.Timestamptz(6)
+  Jobs_Technologies     Jobs_Technologies[]
   Projects_Technologies Projects_Technologies[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Jobs {
+  id                Int                 @id @default(autoincrement())
+  created_at        DateTime            @default(now()) @db.Timestamptz(6)
+  name              String
+  description       String
+  start_date        DateTime            @db.Date
+  image_url         String?
+  job_url           String?
+  finish_date       DateTime?           @db.Date
+  company_name      String
+  Jobs_Technologies Jobs_Technologies[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Jobs_Technologies {
+  id              Int          @id @default(autoincrement())
+  jobs_id         Int
+  technologies_id Int
+  created_at      DateTime     @default(now()) @db.Timestamptz(6)
+  Jobs            Jobs         @relation(fields: [jobs_id], references: [id], onDelete: Cascade)
+  Technologies    Technologies @relation(fields: [technologies_id], references: [id], onDelete: Cascade)
 }
