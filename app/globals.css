@@ -64,6 +64,18 @@ body {
     z-index: -1;
 }
 
+#esfera3 {
+    top: 1800px;
+}
+
+#esfera4 {
+    top: 2850px;
+}
+
+.image-container-hero img {
+    border-radius: 100%;
+}
+
 .nav-bar {
     background-color: var(--nav-bg-color);
     z-index: 1;

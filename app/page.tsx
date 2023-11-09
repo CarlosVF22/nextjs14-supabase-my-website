@@ -1,6 +1,5 @@
 "use client";
 
-// import { createClient } from "@/utils/supabase/client";
 import React, { useEffect, useRef, useState } from "react";
 import PrimaryButton from "@/components/PrimaryButton";
 import RotateText from "@/components/RotateText";
@@ -8,12 +7,14 @@ import Image from "next/image";
 import UpworkIcon from "./icons/upwork-icon-512.png";
 import LinkedinIcon from "./icons/linkedin-icon-512.png";
 import InstagramIcon from "./icons/instagram-icon-512.png";
+import GithubIcon from "./icons/github-icon.png";
 import NavBar from "@/components/NavBar";
 import DownloadCVButton from "@/components/DownloadCVButton";
 import FormContact from "@/components/FormContact";
 import Modal from "@/components/Modal";
 import ProjectCard from "@/components/ProjectCard";
 import JobCard from "@/components/JobCard";
+import HeroImage from "../public/images/hero-img-cropped.jpeg";
 
 interface Technology {
     id: number;
@@ -55,7 +56,9 @@ interface JobType {
 export default function Page() {
     const esfera1Ref = useRef(null);
     const esfera2Ref = useRef(null);
-    const [isModalOpen, setModalOpen] = useState(false);
+    const esfera3Ref = useRef(null);
+    const esfera4Ref = useRef(null);
+    // const [isModalOpen, setModalOpen] = useState(false);
     const [projects, setProjects] = useState<ProjectType[]>([]);
     const [jobs, setJobs] = useState<JobType[]>([]);
 
@@ -77,9 +80,11 @@ export default function Page() {
             }, 6000);
         }
 
-        if (esfera1Ref.current && esfera2Ref.current) {
+        if (esfera1Ref.current && esfera2Ref.current && esfera3Ref.current) {
             moveRandomly(esfera1Ref.current);
             moveRandomly(esfera2Ref.current);
+            moveRandomly(esfera3Ref.current);
+            moveRandomly(esfera4Ref.current);
         }
     }, []);
 
@@ -93,28 +98,58 @@ export default function Page() {
         fetchProjects();
     }, []);
 
-    // fetch all jobs
+    // fetch all jobs and sort by finish_date
     useEffect(() => {
         const fetchJobs = async () => {
             const response = await fetch("/jobs");
             const data = await response.json();
-            setJobs(data.jobs);
+
+            // Clasifica los jobs en dos grupos: en curso y finalizados
+            const ongoingJobs = data.jobs.filter(
+                (job: JobType) => job.finish_date === null
+            );
+            const completedJobs = data.jobs.filter(
+                (job: JobType) => job.finish_date !== null
+            );
+
+            // Ordena los trabajos completados por fecha de finalización de forma descendente
+            completedJobs.sort((a: JobType, b: JobType) => {
+                // Convertir las fechas a objetos Date
+                const dateA = new Date(a.finish_date);
+                const dateB = new Date(b.finish_date);
+
+                // Orden descendente, el más reciente primero
+                return dateB.getTime() - dateA.getTime();
+            });
+
+            // Combina los trabajos en curso con los trabajos completados ya ordenados
+            const sortedJobs = [...ongoingJobs, ...completedJobs];
+
+            // Establece el estado con los trabajos ordenados
+            setJobs(sortedJobs);
         };
         fetchJobs();
     }, []);
 
-    const handleOpenModal = () => {
-        setModalOpen(true);
+    const handleOpenWhatsapp = () => {
+        const skolmiNumber = "+573148393111";
+        const message = "Hola 😀";
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://api.whatsapp.com/send?phone=${skolmiNumber}&text=${encodedMessage}`;
+
+        window.open(url, "_blank");
     };
 
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+    // const handleCloseModal = () => {
+    //     setModalOpen(false);
+    // };
 
     return (
         <div className="background">
-            <div className="esfera esfera1" ref={esfera1Ref}></div>
-            <div className="esfera esfera2" ref={esfera2Ref}></div>
+            <div id="esfera1" className="esfera" ref={esfera1Ref}></div>
+            <div id="esfera2" className="esfera" ref={esfera2Ref}></div>
+            <div id="esfera3" className="esfera" ref={esfera3Ref}></div>
+            <div id="esfera4" className="esfera" ref={esfera4Ref}></div>
             <main className="h-full relative">
                 <header className="flex mt-5 justify-center md:mr-16 md:justify-end">
                     <a
@@ -124,6 +159,15 @@ export default function Page() {
                     >
                         <button className="w-10 m-2 transition ease-in-out hover:-translate-y-1 hover:scale-125 duration-300">
                             <Image src={UpworkIcon} alt="Upwork icon" />
+                        </button>
+                    </a>
+                    <a
+                        href="https://github.com/CarlosVF22"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <button className="w-10 m-2 transition ease-in-out hover:-translate-y-1 hover:scale-125 duration-300">
+                            <Image src={GithubIcon} alt="Github icon" />
                         </button>
                     </a>
                     <a
@@ -147,7 +191,14 @@ export default function Page() {
                 </header>
                 <section className="w-11/12 md:w-10/12 m-auto h-full">
                     <div className="flex flex-col items-center justify-center h-3/4">
-                        <div className="mt-20 w-full text-center">
+                        <div className="image-container-hero">
+                            <Image
+                                src={HeroImage}
+                                width={350}
+                                alt="Profile picture"
+                            />
+                        </div>
+                        <div className="mt-5 w-full text-center">
                             <h1>
                                 <span className="text-salte-700 text-lg md:text-2xl lg:text-4xl">
                                     Hi, my names is Carlos, I'am a
@@ -156,7 +207,7 @@ export default function Page() {
                                     <RotateText
                                         texts={[
                                             "Fullstack developer",
-                                            "Web design",
+                                            "Web designer",
                                             "Backend developer",
                                             "Frontend developer",
                                             "Dev-Ops",
@@ -169,18 +220,18 @@ export default function Page() {
                         </div>
                         <div className="mt-2 flex justify-center w-full">
                             <div className="p-2">
-                                <PrimaryButton onClick={handleOpenModal} />
+                                <PrimaryButton onClick={handleOpenWhatsapp} />
                             </div>
                             <div className="p-2">
                                 <DownloadCVButton />
                             </div>
                         </div>
                     </div>
-                    {isModalOpen && (
+                    {/* {isModalOpen && (
                         <Modal onClose={handleCloseModal}>
                             <FormContact />
                         </Modal>
-                    )}
+                    )} */}
                 </section>
                 <section
                     id="jobs"

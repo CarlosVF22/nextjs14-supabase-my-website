@@ -14,17 +14,18 @@ export default function NavBar() {
     const [tooltips, setTooltips] = useState([
         {
             isVisible: false,
-            message: "My Projects",
-            icon: ProjectIcon,
-            id: "projects",
-        },
-        {
-            isVisible: false,
             message: "Jobs experience",
             icon: JobsExperienceIcon,
             id: "jobs",
         },
-        { isVisible: false, message: "About me", icon: AboutMeIcon },
+        {
+            isVisible: false,
+            message: "My Projects",
+            icon: ProjectIcon,
+            id: "projects",
+        },
+
+        // { isVisible: false, message: "About me", icon: AboutMeIcon },
         { isVisible: false, message: "Download CV", icon: DownloadIcon },
     ]);
 
