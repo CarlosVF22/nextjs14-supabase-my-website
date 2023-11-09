@@ -201,7 +201,7 @@ export default function Page() {
                         <div className="mt-5 w-full text-center">
                             <h1>
                                 <span className="text-salte-700 text-lg md:text-2xl lg:text-4xl">
-                                    Hi, my names is Carlos, I'am a
+                                    Hi, my name is Carlos, I'am a
                                 </span>
                                 <div className="text-salte-700 text-3xl font-extrabold md:text-6xl lg:text-8xl">
                                     <RotateText
